@@ -46,12 +46,35 @@ const app = new Vue({
         return;
       }
 
-      // Mostrar un mensaje de confirmación
-      alert('Cliente creado correctamente.');
+      // Enviar la solicitud POST a la API
+      const url = '/clientes';
+      const datos = {
+        nombre,
+        correo,
+      };
 
-      // Limpiar los datos del formulario
-      this.cliente.nombre = '';
-      this.cliente.correo = '';
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Actualizar la lista de clientes
+          this.clientes.push(data);
+
+          // Mostrar un mensaje de confirmación
+          alert('Cliente creado correctamente.');
+
+          // Limpiar los datos del formulario
+          this.cliente.nombre = '';
+          this.cliente.correo = '';
+        })
+        .catch(error => {
+          console.error('Error al crear cliente:', error);
+        });
     },
   },
 });

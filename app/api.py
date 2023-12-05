@@ -1,8 +1,8 @@
 # Importar módulos
+from pymysql import MySQLConnection
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-
 
 
 # Crear la aplicación web
@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 # Modelar los datos
 class Cliente(db.Model):
     id_cliente = db.Column(db.Integer, primary_key=True)
-    correo_electronico = db.Column(db.String(100))
+    correo_electronico = db.Column(db.String(100), unique=True)
     direccion = db.Column(db.String(255))
     nombre = db.Column(db.String(100))
     razon_social = db.Column(db.String(255))
@@ -47,12 +47,8 @@ def crear_cliente():
 def actualizar_cliente(id_cliente):
     cliente = Cliente.query.get(id_cliente)
     datos_actualizados = request.json
-    cliente.correo_electronico = datos_actualizados['correo_electronico']
-    cliente.direccion = datos_actualizados['direccion']
-    cliente.nombre = datos_actualizados['nombre']
-    cliente.razon_social = datos_actualizados['razon_social']
-    cliente.ruc = datos_actualizados['ruc']
-    cliente.telefono = datos_actualizados['telefono']
+    for key, value in datos_actualizados.items():
+        setattr(cliente, key, value)
     db.session.commit()
     return jsonify({'mensaje': 'Cliente actualizado exitosamente'}), 200
 
@@ -65,6 +61,7 @@ def eliminar_cliente(id_cliente):
 # Iniciar la aplicación web
 if __name__ == '__main__':
     app.run(debug=True)
+
 
 
 
