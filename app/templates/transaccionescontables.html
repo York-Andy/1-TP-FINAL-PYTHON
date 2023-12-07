@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRUD de Transacciones Contables</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="./static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Lista de Transacciones Contables</h1>
+
+    <table id="tabla-transacciones-contables" class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cuenta Acreditada</th>
+          <th>Cuenta Debitada</th>
+          <th>Descripción</th>
+          <th>Fecha Transacción</th>
+          <th>Monto</th>
+          <th>Tipo Transacción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí se mostrarán las transacciones contables -->
+      </tbody>
+    </table>
+
+    <h2>Crear Transacción Contable</h2>
+
+    <form id="formulario-transaccion-contable" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="cuenta_acreditada" class="form-label">Cuenta Acreditada:</label>
+        <input type="text" class="form-control" id="cuenta_acreditada" name="cuenta_acreditada" placeholder="Cuenta Acreditada" required>
+      </div>
+      <div class="mb-3">
+        <label for="cuenta_debitada" class="form-label">Cuenta Debitada:</label>
+        <input type="text" class="form-control" id="cuenta_debitada" name="cuenta_debitada" placeholder="Cuenta Debitada" required>
+      </div>
+      <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción:</label>
+        <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripción" required>
+      </div>
+      <div class="mb-3">
+        <label for="fecha_transaccion" class="form-label">Fecha Transacción:</label>
+        <input type="date" class="form-control" id="fecha_transaccion" name="fecha_transaccion" required>
+      </div>
+      <div class="mb-3">
+        <label for="monto" class="form-label">Monto:</label>
+        <input type="number" class="form-control" id="monto" name="monto" placeholder="Monto" required>
+      </div>
+      <div class="mb-3">
+        <label for="tipo_transaccion" class="form-label">Tipo Transacción:</label>
+        <input type="text" class="form-control" id="tipo_transaccion" name="tipo_transaccion" placeholder="Tipo Transacción" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+
+    <!-- Botones Modificar y Eliminar -->
+    <div class="mt-3">
+      <button id="btnModificar" class="btn btn-warning" disabled>Modificar</button>
+      <button id="btnEliminar" class="btn btn-danger" disabled>Eliminar</button>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

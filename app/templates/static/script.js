@@ -1,82 +1,142 @@
-// Funciones para interactuar con la base de datos contabilidaddb
+document.addEventListener('DOMContentLoaded', function () {
+  // Cargar clientes al cargar la página
+  cargarClientes();
 
-// Función para realizar una solicitud GET a la API para obtener clientes
-function obtenerClientes() {
-  // Cambiar la URL de la solicitud a la base de datos
-  fetch('http://localhost/contabilidaddb/api/clientes', {
-    credentials: 'include'
-  })
-    .then(response => response.json())
-    .then(data => {
-      // Modificar el código para procesar los datos de la base de datos
-      document.getElementById('resultadoClientes').innerHTML = `
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Correo electrónico</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${data.map(cliente => `
-              <tr>
-                <td>${cliente.id}</td>
-                <td>${cliente.nombre}</td>
-                <td>${cliente.correo_electronico}</td>
-                <td>
-                  <button type="button" class="btn btn-warning" onclick="abrirModalModificar(${cliente.id})">Modificar</button>
-                  <button type="button" class="btn btn-danger" onclick="eliminarCliente(${cliente.id})">Eliminar</button>
-                </td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
+  // Evento de envío del formulario para crear o actualizar cliente
+  document.getElementById('formulario-cliente').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const clienteData = {};
+
+    formData.forEach((value, key) => {
+      clienteData[key] = value;
+    });
+
+    // Verificar si se está creando un nuevo cliente o actualizando uno existente
+    const clienteId = document.getElementById('btnModificar').dataset.clienteId;
+
+    if (clienteId) {
+      // Si hay un clienteId, se está actualizando
+      actualizarCliente(clienteId, clienteData);
+    } else {
+      // Si no hay clienteId, se está creando un nuevo cliente
+      crearCliente(clienteData);
+    }
+  });
+
+  // Evento click en el botón Modificar
+  document.getElementById('btnModificar').addEventListener('click', function () {
+    const clienteId = this.dataset.clienteId;
+
+    // Cargar datos del cliente en el formulario para modificar
+    cargarDatosCliente(clienteId);
+  });
+
+  // Evento click en el botón Eliminar
+  document.getElementById('btnEliminar').addEventListener('click', function () {
+    const clienteId = this.dataset.clienteId;
+
+    // Eliminar cliente
+    eliminarCliente(clienteId);
+  });
+});
+
+// Función para cargar clientes
+function cargarClientes() {
+  axios.get('http://tu-api.com/clientes')
+    .then(function (response) {
+      const clientes = response.data;
+
+      // Lógica para mostrar los clientes en la tabla
+      // ...
+
     })
-    .catch(error => {
-      console.error('Error al obtener clientes:', error);
+    .catch(function (error) {
+      console.error('Error al cargar clientes:', error);
     });
 }
 
-// Función para abrir un modal para modificar un cliente
-function abrirModalModificar(idCliente) {
-  // Cargar los datos del cliente en el modal
-  const cliente = obtenerClientePorID(idCliente);
-  document.getElementById('modal-modificar').querySelector('#id').value = cliente.id;
-  document.getElementById('modal-modificar').querySelector('#nombre').value = cliente.nombre;
-  document.getElementById('modal-modificar').querySelector('#correo').value = cliente.correo_electronico;
+// Función para crear un nuevo cliente
+function crearCliente(clienteData) {
+  axios.post('http://tu-api.com/clientes', clienteData)
+    .then(function (response) {
+      const nuevoClienteId = response.data.id_cliente;
 
-  // Mostrar el modal
-  document.getElementById('modal-modificar').classList.add('show');
+      // Lógica para actualizar la interfaz con el nuevo cliente
+      // ...
+
+      // Limpiar el formulario después de la creación
+      document.getElementById('formulario-cliente').reset();
+    })
+    .catch(function (error) {
+      console.error('Error al crear cliente:', error);
+    });
+}
+
+// Función para cargar datos de un cliente en el formulario para modificar
+function cargarDatosCliente(clienteId) {
+  axios.get(`http://tu-api.com/clientes/${clienteId}`)
+    .then(function (response) {
+      const cliente = response.data;
+
+      // Lógica para cargar los datos del cliente en el formulario
+      // ...
+
+      // Habilitar el botón de Modificar
+      document.getElementById('btnModificar').disabled = false;
+      // Establecer el clienteId en el botón Modificar
+      document.getElementById('btnModificar').dataset.clienteId = cliente.id_cliente;
+      // Habilitar el botón de Eliminar
+      document.getElementById('btnEliminar').disabled = false;
+      // Establecer el clienteId en el botón Eliminar
+      document.getElementById('btnEliminar').dataset.clienteId = cliente.id_cliente;
+    })
+    .catch(function (error) {
+      console.error('Error al cargar datos del cliente:', error);
+    });
+}
+
+// Función para actualizar un cliente existente
+function actualizarCliente(clienteId, clienteData) {
+  axios.put(`http://tu-api.com/clientes/${clienteId}`, clienteData)
+    .then(function () {
+      // Lógica para actualizar la interfaz con los datos actualizados del cliente
+      // ...
+
+      // Limpiar el formulario después de la actualización
+      document.getElementById('formulario-cliente').reset();
+
+      // Deshabilitar los botones de Modificar y Eliminar
+      document.getElementById('btnModificar').disabled = true;
+      document.getElementById('btnEliminar').disabled = true;
+    })
+    .catch(function (error) {
+      console.error('Error al actualizar cliente:', error);
+    });
 }
 
 // Función para eliminar un cliente
-function eliminarCliente(idCliente) {
-  // Eliminar el cliente de la base de datos
-  fetch(`http://localhost/contabilidaddb/api/clientes/${idCliente}`, {
-    method: 'DELETE'
-  })
-    .then(response => response.json())
-    .then(data => {
-      // Actualizar la tabla
-      obtenerClientes();
+function eliminarCliente(clienteId) {
+  axios.delete(`http://tu-api.com/clientes/${clienteId}`)
+    .then(function () {
+      // Lógica para eliminar el cliente de la interfaz
+      // ...
+
+      // Limpiar el formulario después de la eliminación
+      document.getElementById('formulario-cliente').reset();
+
+      // Deshabilitar los botones de Modificar y Eliminar
+      document.getElementById('btnModificar').disabled = true;
+      document.getElementById('btnEliminar').disabled = true;
     })
-    .catch(error => {
+    .catch(function (error) {
       console.error('Error al eliminar cliente:', error);
     });
 }
 
-// Función para obtener el cliente por ID
-function obtenerClientePorID(idCliente) {
-  // Realizar una solicitud GET a la API
-  return fetch(`http://localhost/contabilidaddb/api/clientes/${idCliente}`, {
-    credentials: 'include'
-  })
-    .then(response => response.json())
-    .then(data => data);
-}
+
+
 
   
   

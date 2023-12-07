@@ -1,5 +1,4 @@
 /* Reseteo de estilos */
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,7 +6,6 @@
 }
 
 /* Globales */
-
 body {
   font-family: sans-serif;
   color: #333;
@@ -21,7 +19,6 @@ body {
 }
 
 /* Componentes */
-
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -107,12 +104,12 @@ body {
 }
 
 /* Utilizando clases para estilos responsivos */
-
 @media only screen and (max-width: 768px) {
   .container {
     width: 100%;
   }
 }
+
 
 
 
