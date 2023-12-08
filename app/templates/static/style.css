@@ -10,6 +10,9 @@ body {
   font-family: sans-serif;
   color: #333;
   background-color: #f5f5f5;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
 }
 
 .container {
@@ -110,8 +113,69 @@ body {
   }
 }
 
+/* Fondos de página */
+body[data-page="clientes"] {
+  background-image: url('/app/templates/static/img/1.jpg');
+}
+
+body[data-page="cuentascontables"] {
+  background-image: url('/app/templates/static/img/2.jpg');
+}
+
+body[data-page="facturas"] {
+  background-image: url('/app/templates/static/img/4.jpg');
+}
+
+body[data-page="libromayor"] {
+  background-image: url('/app/templates/static/img/5.jpg');
+}
+
+body[data-page="ordenescompra"] {
+  background-image: url('/app/templates/static/img/6.jpg');
+}
+
+body[data-page="proveedores"] {
+  background-image: url('/app/templates/static/img/7.jpg');
+}
+
+body[data-page="transaccionescontables"] {
+  background-image: url('/app/templates/static/img/8.jpg');
+}
+
+/* Estilos adicionales que proporcionaste */
+main {
+  flex: 1;
+  transition: margin-left 0.5s;
+}
+
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  background-color: #343a40;
+  padding-top: 56px;
+  transition: 0.5s;
+}
+
+.sidebar a {
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.navbar-toggler {
+  order: -1;
+}
 
 
 
-
-  

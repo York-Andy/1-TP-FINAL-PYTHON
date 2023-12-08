@@ -3,44 +3,71 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Gestión</title>
+  <title>Sistema de Gestión Contable</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <link rel="stylesheet" href="./static/style.css">
+  <link rel="stylesheet" href="/app/static/style.css">
+  <style>
+    body {
+      background-image: url('/app/templates/static/img/3.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+  </style>
 </head>
-<body>
-  <div class="container">
-    <h1>Sistema de Gestión</h1>
+<body data-page="index">
 
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="cargarPaginaClientes('clientes')">Clientes</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="cargarPagina('cuentascontables')">Cuentas Contables</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="cargarPagina('facturas')">Facturas</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="cargarPagina('libromayor')">Libro Mayor</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="cargarPagina('ordenescompra')">Órdenes de Compra</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="cargarPagina('proveedores')">Proveedores</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="cargarPagina('transaccionescontables')">Transacciones Contables</a>
-      </li>
-    </ul>
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div id="contenido-pagina">
-      <!-- El contenido de la página se cargará aquí -->
-    </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/app/templates/cliente.html" onclick="cargarPaginaClientes('clientes')">Clientes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/app/templates/cuentascontables.html" onclick="cargarPagina('cuentascontables')">Cuentas Contables</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/app/templates/facturas.html" onclick="cargarPagina('facturas')">Facturas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/app/templates/libromayor.html" onclick="cargarPagina('libromayor')">Libro Mayor</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/app/templates/ordenescompra.html" onclick="cargarPagina('ordenescompra')">Órdenes de Compra</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/app/templates/proveedores.html" onclick="cargarPagina('proveedores')">Proveedores</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/app/templates/transaccionescontables.html" onclick="cargarPagina('transaccionescontables')">Transacciones Contables</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="mt-3">
+      <div class="container">
+        <h1 style="color: #fff;">Sistema de Gestión Contable</h1>
+        <div id="contenido-pagina">
+          <!-- El contenido de la página se cargará aquí -->
+        </div>
+      </div>
+    </main>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="script.js"></script>
+  <script src="/app/static/script.js"></script>
+
+  <!-- Scripts de Bootstrap (jQuery y Popper.js) -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-oR5ELzfqgSWX0NIVbIo3z6uR6/Nggxh92wq2rUZgb2R+9PvCmEAx0ELb5eMiU5zQ" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-ldHHcAV6ELwy7la8jaTrrjeiYl7DqPFaP5ZI3ZgR3n6r4P5t6cFq6C5AHwYMKbT" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2Xof6A5jxH8yaz/L21aBLA6E12frC1Fz0l67" crossorigin="anonymous"></script>
 </body>
 </html>
+
+

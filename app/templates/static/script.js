@@ -1,137 +1,159 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Cargar clientes al cargar la página
-  cargarClientes();
+  const sidebar = document.querySelector('.sidebar');
+  const main = document.querySelector('main');
 
-  // Evento de envío del formulario para crear o actualizar cliente
-  document.getElementById('formulario-cliente').addEventListener('submit', function (event) {
+  document.querySelector('.navbar-toggler').addEventListener('click', function () {
+    sidebar.classList.toggle('show');
+    main.classList.toggle('shift');
+  });
+
+  const sidebarLinks = document.querySelectorAll('.sidebar a');
+
+  sidebarLinks.forEach(link => {
+    link.addEventListener('mouseover', function () {
+      this.style.backgroundColor = '#ddd';
+      this.style.color = 'black';
+    });
+
+    link.addEventListener('mouseout', function () {
+      this.style.backgroundColor = '';
+      this.style.color = 'white';
+    });
+  });
+
+  // Cargar clientes al cargar la página
+  cargarEntidad('clientes');
+
+  // Evento de envío del formulario para crear o actualizar entidad
+  document.getElementById('formulario-entidad').addEventListener('submit', function (event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const clienteData = {};
+    const entidadData = {};
 
     formData.forEach((value, key) => {
-      clienteData[key] = value;
+      entidadData[key] = value;
     });
 
-    // Verificar si se está creando un nuevo cliente o actualizando uno existente
-    const clienteId = document.getElementById('btnModificar').dataset.clienteId;
+    // Verificar si se está creando una nueva entidad o actualizando una existente
+    const entidadId = document.getElementById('btnModificar').dataset.entidadId;
 
-    if (clienteId) {
-      // Si hay un clienteId, se está actualizando
-      actualizarCliente(clienteId, clienteData);
+    if (entidadId) {
+      // Si hay un entidadId, se está actualizando
+      actualizarEntidad(entidadId, entidadData);
     } else {
-      // Si no hay clienteId, se está creando un nuevo cliente
-      crearCliente(clienteData);
+      // Si no hay entidadId, se está creando una nueva entidad
+      crearEntidad(entidadData);
     }
   });
 
   // Evento click en el botón Modificar
   document.getElementById('btnModificar').addEventListener('click', function () {
-    const clienteId = this.dataset.clienteId;
+    const entidadId = this.dataset.entidadId;
 
-    // Cargar datos del cliente en el formulario para modificar
-    cargarDatosCliente(clienteId);
+    // Cargar datos de la entidad en el formulario para modificar
+    cargarDatosEntidad(entidadId);
   });
 
   // Evento click en el botón Eliminar
   document.getElementById('btnEliminar').addEventListener('click', function () {
-    const clienteId = this.dataset.clienteId;
+    const entidadId = this.dataset.entidadId;
 
-    // Eliminar cliente
-    eliminarCliente(clienteId);
+    // Eliminar entidad
+    eliminarEntidad(entidadId);
   });
+
 });
 
-// Función para cargar clientes
-function cargarClientes() {
-  axios.get('http://tu-api.com/clientes')
+// Función común para cargar entidades
+function cargarEntidad(entidad) {
+  axios.get(`http://tu-api.com/${entidad}`)
     .then(function (response) {
-      const clientes = response.data;
+      const entidades = response.data;
 
-      // Lógica para mostrar los clientes en la tabla
+      // Lógica para mostrar las entidades en la tabla
       // ...
 
     })
     .catch(function (error) {
-      console.error('Error al cargar clientes:', error);
+      console.error(`Error al cargar ${entidad}:`, error);
     });
 }
 
-// Función para crear un nuevo cliente
-function crearCliente(clienteData) {
-  axios.post('http://tu-api.com/clientes', clienteData)
+// Función común para crear una nueva entidad
+function crearEntidad(entidadData) {
+  axios.post('http://tu-api.com/entidades', entidadData)
     .then(function (response) {
-      const nuevoClienteId = response.data.id_cliente;
+      const nuevaEntidadId = response.data.id_entidad;
 
-      // Lógica para actualizar la interfaz con el nuevo cliente
+      // Lógica para actualizar la interfaz con la nueva entidad
       // ...
 
       // Limpiar el formulario después de la creación
-      document.getElementById('formulario-cliente').reset();
+      document.getElementById('formulario-entidad').reset();
+
+      // Habilitar los botones de Modificar y Eliminar
+      document.getElementById('btnModificar').disabled = false;
+      document.getElementById('btnEliminar').disabled = false;
     })
     .catch(function (error) {
-      console.error('Error al crear cliente:', error);
+      console.error(`Error al crear ${entidad}:`, error);
     });
 }
 
-// Función para cargar datos de un cliente en el formulario para modificar
-function cargarDatosCliente(clienteId) {
-  axios.get(`http://tu-api.com/clientes/${clienteId}`)
+// Función común para cargar datos de una entidad en el formulario para modificar
+function cargarDatosEntidad(entidadId) {
+  axios.get(`http://tu-api.com/entidades/${entidadId}`)
     .then(function (response) {
-      const cliente = response.data;
+      const entidad = response.data;
 
-      // Lógica para cargar los datos del cliente en el formulario
+      // Lógica para cargar los datos de la entidad en el formulario
       // ...
 
-      // Habilitar el botón de Modificar
+      // Habilitar los botones de Modificar y Eliminar
       document.getElementById('btnModificar').disabled = false;
-      // Establecer el clienteId en el botón Modificar
-      document.getElementById('btnModificar').dataset.clienteId = cliente.id_cliente;
-      // Habilitar el botón de Eliminar
       document.getElementById('btnEliminar').disabled = false;
-      // Establecer el clienteId en el botón Eliminar
-      document.getElementById('btnEliminar').dataset.clienteId = cliente.id_cliente;
     })
     .catch(function (error) {
-      console.error('Error al cargar datos del cliente:', error);
+      console.error(`Error al cargar datos de ${entidad}:`, error);
     });
 }
 
-// Función para actualizar un cliente existente
-function actualizarCliente(clienteId, clienteData) {
-  axios.put(`http://tu-api.com/clientes/${clienteId}`, clienteData)
+// Función común para actualizar una entidad existente
+function actualizarEntidad(entidadId, entidadData) {
+  axios.put(`http://tu-api.com/entidades/${entidadId}`, entidadData)
     .then(function () {
-      // Lógica para actualizar la interfaz con los datos actualizados del cliente
+      // Lógica para actualizar la interfaz con los datos actualizados de la entidad
       // ...
 
       // Limpiar el formulario después de la actualización
-      document.getElementById('formulario-cliente').reset();
+      document.getElementById('formulario-entidad').reset();
 
       // Deshabilitar los botones de Modificar y Eliminar
       document.getElementById('btnModificar').disabled = true;
       document.getElementById('btnEliminar').disabled = true;
     })
     .catch(function (error) {
-      console.error('Error al actualizar cliente:', error);
+      console.error(`Error al actualizar ${entidad}:`, error);
     });
 }
 
-// Función para eliminar un cliente
-function eliminarCliente(clienteId) {
-  axios.delete(`http://tu-api.com/clientes/${clienteId}`)
+// Función común para eliminar una entidad
+function eliminarEntidad(entidadId) {
+  axios.delete(`http://tu-api.com/entidades/${entidadId}`)
     .then(function () {
-      // Lógica para eliminar el cliente de la interfaz
+      // Lógica para eliminar la entidad de la interfaz
       // ...
 
       // Limpiar el formulario después de la eliminación
-      document.getElementById('formulario-cliente').reset();
+      document.getElementById('formulario-entidad').reset();
 
       // Deshabilitar los botones de Modificar y Eliminar
       document.getElementById('btnModificar').disabled = true;
       document.getElementById('btnEliminar').disabled = true;
     })
     .catch(function (error) {
-      console.error('Error al eliminar cliente:', error);
+      console.error(`Error al eliminar ${entidad}:`, error);
     });
 }
 
