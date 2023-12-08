@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import mysql.connector
 from flask_cors import CORS
-
+from flask_marshmallow import Marshmallow
 app = Flask(__name__)
 CORS(app)
 
@@ -14,6 +14,7 @@ config = {
 
 # Crea la conexión
 conexion = mysql.connector.connect(**config)
+
 
 # Crea un cursor para ejecutar consultas
 cursor = conexion.cursor()

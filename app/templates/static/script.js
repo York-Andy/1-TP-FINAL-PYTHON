@@ -149,8 +149,8 @@ function eliminarEntidad(entidadId) {
       document.getElementById('formulario-entidad').reset();
 
       // Deshabilitar los botones de Modificar y Eliminar
-      document.getElementById('btnModificar').disabled = true;
-      document.getElementById('btnEliminar').disabled = true;
+      document.getElementById('btnModificar').disabled= false;
+      document.getElementById('btnEliminar').disabled = false;
     })
     .catch(function (error) {
       console.error(`Error al eliminar ${entidad}:`, error);

@@ -1,16 +1,18 @@
 import Vue from 'vue';
 
-// Importar el código de Vue.js
-import './vue.js';
-
 const app = new Vue({
   el: '#app',
   data: {
     clientes: [],
     cliente: {
+      idCliente: '',
       nombre: '',
-      correo: '',
-      idClientes: '',
+      razonsocial: '',
+      ruc: '',
+      direccion: '',
+      telefono: '',
+      correoelectronico: ''
+      // Asegúrate de tener las propiedades necesarias del cliente aquí
     },
   },
   mounted() {
@@ -18,39 +20,44 @@ const app = new Vue({
   },
   methods: {
     obtenerClientes() {
-      // Enviar la solicitud GET a la API
       const url = '/clientes';
       fetch(url)
         .then(response => response.json())
         .then(data => {
-          // Actualizar la lista de clientes
           this.clientes = data;
         })
         .catch(error => {
           console.error('Error al obtener clientes:', error);
         });
     },
-    crearCliente() {
-      // Obtener los datos del cliente del formulario
-      const nombre = this.cliente.nombre;
-      const correo = this.cliente.correo;
 
-      // Validar datos del usuario
+    // Método para crear un cliente
+    crearCliente() {
+      const nombre = this.cliente.nombre;
+      const razonsocial = this.cliente.razonsocial;
+      const ruc = this.cliente.ruc;
+      const direccion = this.cliente.direccion;
+      const telefono = this.cliente.telefono;
+      const correoelectronico = this.cliente.correoelectronico;
+
       if (!nombre || nombre.length < 3) {
         alert('El nombre debe tener al menos 3 caracteres.');
         return;
       }
 
-      if (!correo || !correo.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+      if (!correoelectronico || !correoelectronico.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
         alert('El correo electrónico no es válido.');
         return;
       }
 
-      // Enviar la solicitud POST a la API
       const url = '/clientes';
       const datos = {
         nombre,
-        correo,
+        razonsocial,
+        ruc,
+        direccion,
+        telefono,
+        correoelectronico,
       };
 
       fetch(url, {
@@ -62,20 +69,103 @@ const app = new Vue({
       })
         .then(response => response.json())
         .then(data => {
-          // Actualizar la lista de clientes
+          // Agregar el nuevo cliente a la lista
           this.clientes.push(data);
 
-          // Mostrar un mensaje de confirmación
           alert('Cliente creado correctamente.');
-
-          // Limpiar los datos del formulario
-          this.cliente.nombre = '';
-          this.cliente.correo = '';
+          this.limpiarFormulario();
         })
         .catch(error => {
           console.error('Error al crear cliente:', error);
         });
     },
+
+    // Método para actualizar un cliente
+    modificarCliente(idCliente) {
+      const nombre = this.cliente.nombre;
+      const razonsocial = this.cliente.razonsocial;
+      const ruc = this.cliente.ruc;
+      const direccion = this.cliente.direccion;
+      const telefono = this.cliente.telefono;
+      const correoelectronico = this.cliente.correoelectronico;
+
+      if (!nombre || nombre.length < 3) {
+        alert('El nombre debe tener al menos 3 caracteres.');
+        return;
+      }
+
+      if (!correoelectronico || !correoelectronico.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+        alert('El correo electrónico no es válido.');
+        return;
+      }
+
+      const url = `/clientes/${idCliente}`;
+      const datos = {
+        nombre,
+        razonsocial,
+        ruc,
+        direccion,
+        telefono,
+        correoelectronico,
+      };
+
+      fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Actualizar la lista de clientes con el cliente modificado
+          const index = this.clientes.findIndex(cliente => cliente.id_cliente === idCliente);
+          if (index !== -1) {
+            this.$set(this.clientes, index, data);
+          }
+
+          alert('Cliente modificado correctamente.');
+          this.limpiarFormulario();
+        })
+        .catch(error => {
+          console.error('Error al modificar cliente:', error);
+        });
+    },
+
+    // Método para eliminar un cliente
+    eliminarCliente(idCliente) {
+      const url = `/clientes/${idCliente}`;
+
+      fetch(url, {
+        method: 'DELETE',
+      })
+        .then(response => {
+          if (response.ok) {
+            // Eliminar el cliente de la lista
+            this.clientes = this.clientes.filter(cliente => cliente.id_cliente !== idCliente);
+            alert('Cliente eliminado correctamente.');
+            this.limpiarFormulario();
+          } else {
+            console.error('Error al eliminar cliente:', response.statusText);
+          }
+        })
+        .catch(error => {
+          console.error('Error al eliminar cliente:', error);
+        });
+    },
+
+    // Método para limpiar el formulario después de crear o modificar un cliente
+    limpiarFormulario() {
+      this.cliente.idCliente = '';
+      this.cliente.nombre = '';
+      this.cliente.razonsocial = '';
+      this.cliente.ruc = '';
+      this.cliente.direccion = '';
+      this.cliente.telefono = '';
+      this.cliente.correoelectronico = '';
+    },
   },
 });
+
+
 
