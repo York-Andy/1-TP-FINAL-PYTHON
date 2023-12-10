@@ -1,0 +1,181 @@
+/* Reseteo de estilos */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Globales */
+body {
+  font-family: sans-serif;
+  color: #333;
+  background-color: #f5f5f5;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Componentes */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.alert {
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  margin: 0 auto;
+}
+
+.alert-success {
+  background-color: #dff0d8;
+  color: #3c763d;
+}
+
+.alert-danger {
+  background-color: #f2dede;
+  color: #a94442;
+}
+
+.form-control {
+  width: 100%;
+  height: 3.8rem;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+}
+
+.form-control:focus {
+  border-color: #8435eb;
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #388e3c;
+}
+
+.btn-warning,
+.btn-danger {
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Utilizando clases para estilos responsivos */
+@media only screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}
+
+/* Fondos de página */
+body[data-page="clientes"] {
+  background-image: url('/app/templates/static/img/1.jpg');
+}
+
+body[data-page="cuentascontables"] {
+  background-image: url('/app/templates/static/img/2.jpg');
+}
+
+body[data-page="facturas"] {
+  background-image: url('/app/templates/static/img/4.jpg');
+}
+
+body[data-page="libromayor"] {
+  background-image: url('/app/templates/static/img/5.jpg');
+}
+
+body[data-page="ordenescompra"] {
+  background-image: url('/app/templates/static/img/6.jpg');
+}
+
+body[data-page="proveedores"] {
+  background-image: url('/app/templates/static/img/7.jpg');
+}
+
+body[data-page="transaccionescontables"] {
+  background-image: url('/app/templates/static/img/8.jpg');
+}
+
+/* Estilos adicionales que proporcionaste */
+main {
+  flex: 1;
+  transition: margin-left 0.5s;
+}
+
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  background-color: #343a40;
+  padding-top: 56px;
+  transition: 0.5s;
+}
+
+.sidebar a {
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.navbar-toggler {
+  order: -1;
+}
+
+
+

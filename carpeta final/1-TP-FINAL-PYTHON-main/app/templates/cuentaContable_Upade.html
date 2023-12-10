@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Administrar Cuentas Contables</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+<body>
+    <main>
+        <div class="container" id="app">
+            <form style="background-color: aliceblue; margin: 10px auto; width: 400px; padding: 20px;">
+                <h2>Administrar Cuenta Contable</h2>
+                <div class="mb-3">
+                    <label for="id_cuenta">ID de Cuenta</label>
+                    <input type="number" name="id_cuenta" id="id_cuenta" disabled v-model="id_cuenta">
+                </div>
+                <div class="mb-3">
+                    <label for="cuenta_acreditada">Cuenta Acreditada</label>
+                    <input type="number" name="cuenta_acreditada" id="cuenta_acreditada" v-model="cuenta_acreditada">
+                </div>
+                <div class="mb-3">
+                    <label for="cuenta_debitada">Cuenta Debitada</label>
+                    <input type="number" name="cuenta_debitada" id="cuenta_debitada" v-model="cuenta_debitada">
+                </div>
+                <div class="mb-3">
+                    <label for="descripcion">Descripción</label>
+                    <input type="text" name="descripcion" id="descripcion" v-model="descripcion">
+                </div>
+                <div class="mb-3">
+                    <label for="id_cliente">ID de Cliente</label>
+                    <input type="number" name="id_cliente" id="id_cliente" v-model="id_cliente">
+                </div>
+                <div class="mb-3">
+                    <label for="nombre_cuenta">Nombre de Cuenta</label>
+                    <input type="text" name="nombre_cuenta" id="nombre_cuenta" v-model="nombre_cuenta">
+                </div>
+                <div class="mb-3">
+                    <label for="numero_cuenta">Número de Cuenta</label>
+                    <input type="number" name="numero_cuenta" id="numero_cuenta" v-model="numero_cuenta">
+                </div>
+                <!-- Añade otros campos según sea necesario -->
+
+                <button type="button" class="btn btn-success" @click="modificarCuentaContable">Guardar Cambios</button>
+            </form>
+        </div>
+    </main>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/cuenta_contable_editar.js"></script>
+</body>
+</html>
